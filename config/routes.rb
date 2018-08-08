@@ -1,14 +1,11 @@
 Rails.application.routes.draw do
   namespace :api do
-    get 'users/index'
-    get 'users/create'
-    get 'users/show'
+    resources :users do
+      resources :articles, except: %s[show, destroy] do
+        resources :votes, only: %s[update]
+      end
+    end
+    get '/articles/fetchNews', to: 'articles#fetchNews'
   end
-  namespace :api do
-    get 'articles/index'
-    get 'articles/create'
-    get 'articles/show'
-    get 'articles/fetchNews'
-  end
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
+# For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
