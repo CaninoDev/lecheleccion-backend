@@ -28,6 +28,9 @@ gem 'puma', '~> 3.11'
 # Access Google News API
 gem 'news-api'
 
+# CORS access
+gem 'rack-cors', :require => 'rack/cors'
+
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'
 
