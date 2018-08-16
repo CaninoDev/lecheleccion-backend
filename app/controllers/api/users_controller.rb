@@ -9,11 +9,18 @@ class API::UsersController < ApplicationController
 
 
   def create
-    @user = User.find_or_create_by(name: "#{params[:name]}")
+    @user = User.find_or_create_by(:name => params[:name])
     json_response(@user)
   end
 
 
   def show
   end
+
+  private
+
+  def user_params
+    params.require(:user).permit(:name, :latitude, :longitude)
+  end
 end
+  
