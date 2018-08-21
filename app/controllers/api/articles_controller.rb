@@ -1,10 +1,11 @@
 require 'securerandom'
+require 'news-api'
+
 class API::ArticlesController < ApplicationController
   @@articlesCache = []
   
   def index
-    
-
+    @@articlesCache
   end
 
   def create
