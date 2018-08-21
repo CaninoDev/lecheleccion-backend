@@ -16,21 +16,30 @@ class API::ArticlesController < ApplicationController
   def show
   end
 
-  def fetchNews
-    top_headlines = gather_collection
-    json_response(top_headlines)
+  def fetch_news
+    collection = []
+    case request.method_symbol
+    when :get
+      collection = get_top_news
+    when :post
+      collection = get_searched_news
+    end
+    cacheArticles(collection)
+    json_response(collection)
   end
 
   private
 
-  def gather_collection
-    newsapi = News.new(Rails.application.credentials.googlenews[:api_key])
-    articles = newsapi.get_top_headlines(
-      category: 'politics',
-      language: 'en',
-      country: 'us'
-    )
-    cacheArticles(articles)
+  def get_top_news
+    apikey = Rails.application.credentials.googlenews[:api_key]
+    newsapi = News.new(apikey)
+    newsapi.get_top_headlines(language: 'en')
+  end
+
+  def get_searched_news
+    apikey = Rails.application.credentials.googlenews[:api_key]
+    newsapi = News.new(apikey)
+    newsapi.get_everything(q: params[:search_term], language: 'en')
   end
 
   def cacheArticles (articles)

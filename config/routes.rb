@@ -5,7 +5,7 @@ Rails.application.routes.draw do
         resources :votes, only: %s[update]
       end
     end
-    get '/articles/fetchNews', to: 'articles#fetchNews'
+    match '/articles/fetchNews' => 'articles#fetch_news', via: [:get, :post]
   end
 end
 # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
