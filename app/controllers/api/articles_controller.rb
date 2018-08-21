@@ -33,15 +33,15 @@ class API::ArticlesController < ApplicationController
     cacheArticles(articles)
   end
 
-  def cacheArticles(articles)
+  def cacheArticles (articles)
     articles.map do |article|
       art_obj = Article.new(
-        :title => article.title, 
-        :body => article.description, 
-        :url => article.url,
-        :urlToImage => article.urlToImage,
-        :publication_date => article.publishedAt,
-        :uuid => SecureRandom.uuid)
+        title: article.title,
+        body: article.description,
+        url: article.url,
+        urlToImage: article.urlToImage,
+        publication_date: article.publishedAt,
+        uuid: SecureRandom.uuid)
       @@articlesCache << art_obj
       art_obj
     end
