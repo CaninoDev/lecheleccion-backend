@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_08_050359) do
+ActiveRecord::Schema.define(version: 2018_08_24_213657) do
 
   create_table "articles", force: :cascade do |t|
     t.string "url"
@@ -36,10 +36,11 @@ ActiveRecord::Schema.define(version: 2018_08_08_050359) do
   create_table "votes", force: :cascade do |t|
     t.integer "vote"
     t.integer "user_id"
-    t.integer "article_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["article_id"], name: "index_votes_on_article_id"
+    t.string "article_uuid"
+    t.integer "article_uuid_id"
+    t.index ["article_uuid_id"], name: "index_votes_on_article_uuid_id"
     t.index ["user_id"], name: "index_votes_on_user_id"
   end
 
