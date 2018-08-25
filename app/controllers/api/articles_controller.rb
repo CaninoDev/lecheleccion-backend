@@ -2,15 +2,18 @@ require 'securerandom'
 require 'news-api'
 
 class API::ArticlesController < ApplicationController
-  @@articlesCache = []
-  
+
+  @@article_cache
+
   def index
-    @@articlesCache
+    @@articles_cache
   end
 
   def create
-    @article = get_bias(@@articlesCache.find { |item| item.uuid == article_params.uuid })
-    @article.vote = 0
+    @vote = Vote.new(
+      article_id: params[:article_id],
+      user_id: params[:user_id],
+      vote: params[:vote])
   end
 
   def show
@@ -25,7 +28,7 @@ class API::ArticlesController < ApplicationController
       collection = get_searched_news
     end
     cacheArticles(collection)
-    json_response(collection)
+    render json: collection
   end
 
   private
@@ -42,21 +45,21 @@ class API::ArticlesController < ApplicationController
     newsapi.get_everything(q: params[:search_term], language: 'en')
   end
 
-  def cacheArticles (articles)
+  def cacheArticles articles
     articles.map do |article|
       art_obj = Article.new(
         title: article.title,
         body: article.description,
         url: article.url,
         urlToImage: article.urlToImage,
-        publication_date: article.publishedAt,
-        uuid: SecureRandom.uuid)
-      @@articlesCache << art_obj
+        publication_date: article.publishedAt
+      )
+      articles_cache << art_obj
       art_obj
     end
   end
 
   def article_params
-    params.require(:article).permit(:uuid)
+    params.permit(:user_id, :search_term, :article_id)
   end
 end
