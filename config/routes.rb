@@ -1,11 +1,15 @@
 Rails.application.routes.draw do
   namespace :api do
-    resources :users do
-      resources :articles, except: %s[show, destroy] do
-        resources :votes, only: %s[update]
+    resources :articles do
+      collection do
+        post 'search'
       end
     end
-    match '/articles/fetchNews' => 'articles#fetch_news', via: [:get, :post]
+    resources :users do
+      collection do
+        post 'usersList'
+      end
+    end
+    resources :votes
   end
 end
-# For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

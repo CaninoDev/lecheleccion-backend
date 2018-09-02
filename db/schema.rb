@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 2018_08_25_001640) do
 
-  create_table "articles", force: :cascade do |t|
+  create_table "articles", id: :uuid, force: :cascade do |t|
     t.string "url"
     t.string "source"
     t.datetime "publication_date"
@@ -21,7 +21,6 @@ ActiveRecord::Schema.define(version: 2018_08_25_001640) do
     t.decimal "bias"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "uuid"
     t.string "urlToImage"
   end
 
@@ -35,12 +34,10 @@ ActiveRecord::Schema.define(version: 2018_08_25_001640) do
 
   create_table "votes", force: :cascade do |t|
     t.integer "vote"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.integer "user_id"
-    t.integer "article_uuid_id_id"
-    t.integer "article_uuid_id"
-    t.index ["article_uuid_id_id"], name: "index_votes_on_article_uuid_id_id"
+    t.string "article_id"
+    t.index ["article_id"], name: "index_votes_on_article_id"
+    t.index ["user_id"], name: "index_votes_on_user_id"
   end
 
 end

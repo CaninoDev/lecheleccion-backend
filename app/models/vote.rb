@@ -1,4 +1,4 @@
 class Vote < ApplicationRecord
-  belongs_to :id_user
-  belongs_to :id_article
+  belongs_to :user
+  belongs_to :article
 end

@@ -3,18 +3,9 @@ class API::UsersController < ApplicationController
     json_response(User.all)
   end
 
-  def new
-    @user = User.new
-  end
-
-
   def create
-    @user = User.find_or_create_by(:name => params[:name])
+    @user = User.find_or_create_by(name: params[:name])
     json_response(@user)
-  end
-
-
-  def show
   end
 
   private
@@ -23,4 +14,3 @@ class API::UsersController < ApplicationController
     params.require(:user).permit(:name, :latitude, :longitude)
   end
 end
-  
