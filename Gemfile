@@ -29,7 +29,7 @@ gem 'puma'
 gem 'news-api'
 
 # Access the aylien text analysis API
-gem 'aylien_news_api'
+gem 'aylien_news_api', :git => 'https://github.com/AYLIEN/aylien_newsapi_ruby.git'
 gem 'aylien_text_api'
 
 # Indico API Gem
