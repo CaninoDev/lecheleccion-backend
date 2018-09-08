@@ -10,18 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_25_001640) do
+ActiveRecord::Schema.define(version: 2018_09_08_132513) do
 
-  create_table "articles", id: :uuid, force: :cascade do |t|
+  create_table "articles", force: :cascade do |t|
     t.string "url"
+    t.string "urlToImage"
     t.string "source"
     t.datetime "publication_date"
     t.string "title"
     t.text "body"
-    t.decimal "bias"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "urlToImage"
+  end
+
+  create_table "biases", force: :cascade do |t|
+    t.float "libertarian"
+    t.float "green"
+    t.float "liberal"
+    t.float "conservative"
+    t.string "biasable_type"
+    t.integer "biasable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["biasable_type", "biasable_id"], name: "index_biases_on_biasable_type_and_biasable_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -35,7 +46,9 @@ ActiveRecord::Schema.define(version: 2018_08_25_001640) do
   create_table "votes", force: :cascade do |t|
     t.integer "vote"
     t.integer "user_id"
-    t.string "article_id"
+    t.integer "article_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["article_id"], name: "index_votes_on_article_id"
     t.index ["user_id"], name: "index_votes_on_user_id"
   end
