@@ -35,17 +35,19 @@ module Vendor
   end
 
   def self.aylien_news_options
+    read_article = Article.all.map {|art| art[:external_reference_id].to_s}
     options = {
-    :language => ['en'],
-    :published_at_start => 'NOW-2DAYS',
-    :published_at_end => 'NOW',
-    :categories_taxonomy => 'iptc-subjectcode',
-    :categories_confident => true,
-    :categories_id => ['11000000','16000000','14000000','02000000','04000000','05000000','06000000','06004000','07011000','07013000','11024000','11024001','11005001','06004000','11006001','11006012','16003003','11002002','11009000','09004000','11023000','04008005','11003000','16003002'],
-    :source_rankings_alexa_rank_min => 3,
-    :source_rankings_alexa_rank_max => 500,
-    :media_images_count_min  => 1,
-    :per_page => 50
+    not_id: read_article.last(200),
+    language: ['en'],
+    published_at_start: 'NOW-2DAYS',
+    published_at_end: 'NOW',
+    categories_taxonomy: 'iptc-subjectcode',
+    categories_confident: true,
+    categories_id: ['11000000','16000000','14000000','02000000','04000000','05000000','06000000','06004000','07011000','07013000','11024000','11024001','11005001','06004000','11006001','11006012','16003003','11002002','11009000','09004000','11023000','04008005','11003000','16003002'],
+    source_rankings_alexa_rank_min: 3,
+    source_rankings_alexa_rank_max: 500,
+    media_images_count_min: 1,
+    per_page: 50
     }
     options
   end

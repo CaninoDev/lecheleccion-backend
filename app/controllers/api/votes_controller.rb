@@ -1,7 +1,5 @@
 class API::VotesController < ApplicationController
 
-  @@allVotes = []
-
   def index
     Vote.all
   end
@@ -10,9 +8,16 @@ class API::VotesController < ApplicationController
   end
 
   def create
-    @vote = Vote.create(article_id: params[:article_id], user_id: params[:user_id], vote: params[:vote])
-    @user = User.find_by_id(params[:user_id])
+    byebug
+    user  = User.find_by_id(vote_params[:user_id])
+    article = Article.find_by_id(vote_params[:article_id])
+    @vote = Vote.create(article_id: article.id, user_id: user.id, vote: vote_params[:vote])
+  end
 
+  private
+
+  def vote_params
+    params.permit(:vote, :article_id, :user_id)
   end
 
 end

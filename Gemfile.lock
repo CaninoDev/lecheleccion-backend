@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/AYLIEN/aylien_newsapi_ruby.git
+  revision: 44811781657cf0bea55e56fa3915a262e189e4c6
+  specs:
+    aylien_news_api (1.0.0)
+      json (~> 1.8, >= 1.8.3)
+      typhoeus (~> 1.0, >= 1.0.1)
+
 GEM
   remote: https://rubygems.org/
   specs:

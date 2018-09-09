@@ -1,20 +1,14 @@
 # frozen_string_literal: true
 
-require 'securerandom'
 require 'pp'
 # API endpoints for the collection and distribution of select news articles
 class API::ArticlesController < ApplicationController
 
-  @@articles_cache = []
-
-  def self.cache
-    @@articles_cache
-  end
-
   def index
-    news_collection = Vendor.get_news_articles
-    processed = preprocess(news_collection)
-    render json: processed
+    # news_collection = Vendor.get_news_articles
+    # processed_collection = preprocess(news_collection)
+    # render json: processed_collection
+    render json: Article.all[1 .. 50]
   end
 
   def search
@@ -23,20 +17,19 @@ class API::ArticlesController < ApplicationController
     render json: processed
   end
 
-
   private
 
   def preprocess articles
     prefiltered_articles = prefilter(articles)
     prefiltered_articles.map! do |article|
       Article.create(
-        id: SecureRandom.uuid,
         title: article.title,
         source: article.source.name,
         body: article.body,
         url: article.links.permalink,
         urlToImage: article.media[0].url,
         publication_date: article.published_at,
+        external_reference_id: article.id
       )
     end
     prefiltered_articles
@@ -47,6 +40,6 @@ class API::ArticlesController < ApplicationController
   end
 
   def article_params
-    params.permit(:search_term, :article_id, :vote)
+    params.require(:search_term)
   end
 end
