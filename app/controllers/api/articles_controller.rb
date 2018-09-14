@@ -8,13 +8,19 @@ class API::ArticlesController < ApplicationController
     # news_collection = Vendor.get_news_articles
     # processed_collection = preprocess(news_collection)
     # render json: processed_collection
-    render json: Article.all[1 .. 50]
+    @articles = Article.all
+    json_response(@articles)
   end
 
   def search
-    news_collection = Vendor.get_news_articles params[:search_term]
-    processed = preprocess(news_collection)
-    render json: processed
+    # news_collection = Vendor.get_news_articles params[:search_term]
+    # processed = preprocess(news_collection)
+    json_response(Article.all)
+  end
+
+  def bias
+    @articles_average = Article.average
+    json_response(@articles_average)
   end
 
   private
@@ -36,7 +42,7 @@ class API::ArticlesController < ApplicationController
   end
 
   def prefilter articles
-    articles.stories.reject { |article| article.body.length < 400 }
+    articles.stories.reject { |article| article.body.length < 400 || article.title.length < 1}
   end
 
   def article_params

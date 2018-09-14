@@ -28,3 +28,9 @@
 *.lock
 
 db/schema_cache\.yml
+
+app/lib/tasks/\.keep
+
+lib/tasks/\.keep
+
+\.vscode/

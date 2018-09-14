@@ -8,16 +8,16 @@ class API::VotesController < ApplicationController
   end
 
   def create
-    byebug
-    user  = User.find_by_id(vote_params[:user_id])
+    user = User.find_by_id(vote_params[:user_id])
     article = Article.find_by_id(vote_params[:article_id])
-    @vote = Vote.create(article_id: article.id, user_id: user.id, vote: vote_params[:vote])
+    vote = vote_params[:voted]
+    @vote = Vote.where(article_id: article.id, user_id: user.id).first_or_create
+    render json: {status: :ok}
   end
 
   private
 
   def vote_params
-    params.permit(:vote, :article_id, :user_id)
+    params.require(:vote).permit(:article_id, :user_id, :voted)
   end
-
 end
