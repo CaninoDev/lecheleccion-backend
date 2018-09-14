@@ -46,6 +46,9 @@ gem 'awesome_rails_console'
 # Rest-Client for bottomcenter political bias api
 gem 'httparty'
 
+# Traverse through association tables
+gem 'edge_rider'
+
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'
 

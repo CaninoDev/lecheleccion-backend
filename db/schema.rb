@@ -19,9 +19,9 @@ ActiveRecord::Schema.define(version: 2018_09_09_000240) do
     t.datetime "publication_date"
     t.string "title"
     t.text "body"
+    t.integer "external_reference_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "external_reference_id"
   end
 
   create_table "biases", force: :cascade do |t|
@@ -38,8 +38,6 @@ ActiveRecord::Schema.define(version: 2018_09_09_000240) do
 
   create_table "users", force: :cascade do |t|
     t.string "name"
-    t.float "longitude"
-    t.float "latitude"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

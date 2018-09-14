@@ -7,6 +7,7 @@ class CreateArticles < ActiveRecord::Migration[5.2]
       t.datetime :publication_date
       t.string :title
       t.text :body
+      t.integer :external_reference_id
       t.timestamps
     end
   end
