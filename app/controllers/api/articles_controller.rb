@@ -14,7 +14,7 @@ class API::ArticlesController < ApplicationController
   def search
     news_collection = Vendor.get_news_articles params[:search_term]
     processed = preprocess(news_collection)
-    render json: processed
+    json_response(processed)
   end
 
   private

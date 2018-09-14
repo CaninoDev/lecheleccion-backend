@@ -9,7 +9,7 @@ class API::VotesController < ApplicationController
 
   def create
     byebug
-    user  = User.find_by_id(vote_params[:user_id])
+    user = User.find_by_id(vote_params[:user_id])
     article = Article.find_by_id(vote_params[:article_id])
     @vote = Vote.create(article_id: article.id, user_id: user.id, vote: vote_params[:vote])
   end
