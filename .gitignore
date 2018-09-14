@@ -34,3 +34,5 @@ app/lib/tasks/\.keep
 lib/tasks/\.keep
 
 \.vscode/
+
+app/models/mockdata\.json
