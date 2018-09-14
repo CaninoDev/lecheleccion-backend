@@ -31,6 +31,6 @@ db/schema_cache\.yml
 
 app/lib/tasks/\.keep
 
-\.vscode/
+lib/tasks/\.keep
 
-app/models/mockdata\.json
+\.vscode/

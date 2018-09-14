@@ -8,9 +8,24 @@ class API::UsersController < ApplicationController
     json_response(@user)
   end
 
+  def show
+    @user = User.find_by_id(user_params[:id])
+    response = {
+      name: @user.name,
+      bias: {
+        libertarian: @user.bias[:libertarian],
+        green: @user.bias[:green],
+        liberal: @user.bias[:liberal],
+        conservative: @user.bias[:conservative]
+      },
+      read_articles: @user.articles.count
+    }
+    json_response(response)
+  end
+
   private
 
   def user_params
-    params.require(:user).permit(:name)
+    params.permit(:name, :id)
   end
 end
