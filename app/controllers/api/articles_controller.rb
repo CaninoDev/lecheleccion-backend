@@ -7,7 +7,7 @@ class API::ArticlesController < ApplicationController
   def index
     # news_collection = Vendor.get_news_articles
     # processed_collection = preprocess(news_collection)
-    # render json: processed_collection
+    # json_response(processed_collection)
     @articles = Article.all
     json_response(@articles)
   end
@@ -19,7 +19,7 @@ class API::ArticlesController < ApplicationController
   end
 
   def bias
-    @articles_average = Article.average
+    @articles_average = Article.averages
     json_response(@articles_average)
   end
 

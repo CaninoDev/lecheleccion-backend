@@ -1,6 +1,7 @@
 class API::UsersController < ApplicationController
   def index
-    json_response(User.all)
+    @users = User.all
+    json_response(@users)
   end
 
   def create
