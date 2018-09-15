@@ -36,7 +36,7 @@ class API::ArticlesController < ApplicationController
   end
 
   def prefilter articles
-    articles.stories.reject { |article| article.body.length < 400 }
+    articles.stories.reject { |article| article.body.length < 400 || article.title.length < 1}
   end
 
   def article_params
