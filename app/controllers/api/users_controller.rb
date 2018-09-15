@@ -18,7 +18,8 @@ class API::UsersController < ApplicationController
         liberal: @user.bias[:liberal],
         conservative: @user.bias[:conservative]
       },
-      read_articles: @user.articles.count
+      read_articles_count: @user.articles.count,
+      read_articles: @user.articles
     }
     json_response(response)
   end

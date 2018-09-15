@@ -7,6 +7,7 @@ class Vote < ApplicationRecord
   after_create :get_bias, :update_user_bias
 
   private
+
   def get_bias
     parties = %i[libertarian green liberal conservative]
     artBias = self.article.bias.slice(parties).deep_symbolize_keys
