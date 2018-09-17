@@ -1,3 +1,4 @@
+# Controller for users endpoints
 class API::UsersController < ApplicationController
   def index
     @users = User.all
@@ -11,7 +12,17 @@ class API::UsersController < ApplicationController
 
   def show
     @user = User.find_by_id(user_params[:id])
-    response = {
+    json_response(create_response)
+  end
+
+  private
+
+  def user_params
+    params.permit(:name, :id)
+  end
+
+  def create_response
+    {
       name: @user.name,
       bias: {
         libertarian: @user.bias[:libertarian],
@@ -22,12 +33,5 @@ class API::UsersController < ApplicationController
       read_articles_count: @user.articles.count,
       read_articles: @user.articles
     }
-    json_response(response)
-  end
-
-  private
-
-  def user_params
-    params.permit(:name, :id)
   end
 end

@@ -1,14 +1,13 @@
 class Article < ApplicationRecord
   has_many :votes
   has_many :users, through: :votes
+  after_create :retrieve_bias
 
   has_one :bias, as: :biasable
 
-  after_create :retrieve_bias
   attr_accessor :bias_structure
 
-  Struct.new("ArticleBias", :libertarian, :green, :liberal, :conservative)
-
+  Struct.new('ArticleBias', :libertarian, :green, :liberal, :conservative)
 
   def self.averages
     Struct::ArticleBias.new(
@@ -23,7 +22,7 @@ class Article < ApplicationRecord
 
   def retrieve_bias
     Vendor.init_indico
-    theBias = Indico.political(self.body).deep_transform_keys(&:downcase).deep_symbolize_keys
-    self.bias = Bias.create(theBias)
+    the_bias = Indico.political(body).deep_transform_keys(&:downcase).deep_symbolize_keys
+    self.bias = Bias.create(the_bias)
   end
 end

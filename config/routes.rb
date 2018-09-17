@@ -6,7 +6,7 @@ Rails.application.routes.draw do
         post 'search'
       end
     end
-  resources :users, only: %i[index create show]
-  resources :votes, only: %i[create show index]
+    resources :users, only: %i[index create show]
+    resources :votes, only: %i[create show index]
   end
 end
