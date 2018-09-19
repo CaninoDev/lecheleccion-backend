@@ -49,6 +49,6 @@ class API::ArticlesController < ApplicationController
   end
 
   def article_params
-    params.require(:articles).permit(:search_term)
+    params.permit(:search_terms, :number_of_articles)
   end
 end

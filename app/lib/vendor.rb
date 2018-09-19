@@ -52,14 +52,13 @@ module Vendor
     options
   end
 
-  def self.get_news_articles query=nil
+  def self.get_news_articles query=nil, number=50
     options = self.aylien_news_options
-    if query == nil
-      @aylien_news_api.list_stories(options)
-    else
+    if query != nil
       options[:text] = query
-      @aylien_news_api.list_stories(options)
     end
+    options[:per_page] = number
+    @aylien_news_api.list_stories(options)
   end
 
   def self.get_text_bias article_body
