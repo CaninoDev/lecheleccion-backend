@@ -5,10 +5,11 @@ require 'pp'
 class API::ArticlesController < ApplicationController
 
   def index
-    # news_collection = Vendor.get_news_articles
-    # processed_collection = preprocess(news_collection)
-    # render json: processed_collection
-    render json: Article.all[1 .. 50]
+    news_collection = Vendor.get_news_articles
+    processed_collection = preprocess(news_collection)
+    json_response(processed_collection)
+    # @articles = Article.all
+    # json_response(@articles)
   end
 
   def search
@@ -17,11 +18,20 @@ class API::ArticlesController < ApplicationController
     json_response(processed)
   end
 
+  def bias
+    @articles_average = Article.averages
+    json_response(@articles_average)
+  end
+
   private
 
   def preprocess articles
     prefiltered_articles = prefilter(articles)
-    prefiltered_articles.map! do |article|
+    createArticleRecords(prefiltered_articles)
+  end
+
+  def createArticleRecords articles
+    articles.map do |article|
       Article.create(
         title: article.title,
         source: article.source.name,
@@ -32,7 +42,6 @@ class API::ArticlesController < ApplicationController
         external_reference_id: article.id
       )
     end
-    prefiltered_articles
   end
 
   def prefilter articles
@@ -40,6 +49,6 @@ class API::ArticlesController < ApplicationController
   end
 
   def article_params
-    params.require(:search_term)
+    params.require(:articles).permit(:search_term)
   end
 end

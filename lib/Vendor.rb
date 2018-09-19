@@ -1,7 +1,9 @@
+# Third party module for initialiasing connections and interfacign with their assets
 module Vendor
-  attr_accessor :google_news_api, :aylien_news_api, :aylien_text_api
+  attr_accessor :google_news_api, :aylien_news_api, :aylien_text_api, :iptc_subject_codes
 
   def self.included mod
+    init_subject_codes
     init_aylien_text
     init_aylien_news
     init_indico
@@ -20,8 +22,8 @@ module Vendor
 
   def self.init_aylien_news
     AylienNewsApi.configure do |config|
-      config.api_key["X-AYLIEN-NewsAPI-Application-ID"] = Rails.application.credentials.aylien_news_api[:app_id]
-      config.api_key["X-AYLIEN-NewsAPI-Application-Key"] = Rails.application.credentials.aylien_news_api[:api_key]
+      config.api_key['X-AYLIEN-NewsAPI-Application-ID'] = Rails.application.credentials.aylien_news_api[:app_id]
+      config.api_key['X-AYLIEN-NewsAPI-Application-Key'] = Rails.application.credentials.aylien_news_api[:api_key]
     end
   end
 
@@ -30,8 +32,7 @@ module Vendor
   end
 
   def self.select_iptc_subjectcodes
-    subject_codes = ['11000000','16000000','14000000','02000000','04000000','05000000','06000000','06004000','07011000','07013000','11024000','11024001','11005001','06004000','11006001','11006012','16003003','11002002','11009000','09004000','11023000','04008005','11003000','16003002']
-    subject_codes
+    @iptc_subject_codes = ['11000000','16000000','14000000','02000000','04000000','05000000','06000000','06004000','07011000','07013000','11024000','11024001','11005001','06004000','11006001','11006012','16003003','11002002','11009000','09004000','11023000','04008005','11003000','16003002']
   end
 
   def self.aylien_news_options
@@ -43,7 +44,7 @@ module Vendor
     published_at_end: 'NOW',
     categories_taxonomy: 'iptc-subjectcode',
     categories_confident: true,
-    categories_id: ['11000000','16000000','14000000','02000000','04000000','05000000','06000000','06004000','07011000','07013000','11024000','11024001','11005001','06004000','11006001','11006012','16003003','11002002','11009000','09004000','11023000','04008005','11003000','16003002'],
+    categories_id: @iptc_subject_codes,
     source_rankings_alexa_rank_min: 3,
     source_rankings_alexa_rank_max: 500,
     media_images_count_min: 1,
@@ -53,13 +54,11 @@ module Vendor
   end
 
   def self.get_news_articles query=nil
-    options = self.aylien_news_options
-    if query == nil
-      @aylien_news_api.list_stories(options)
-    else
+    options = aylien_news_options
+    if !query.nil?
       options[:text] = query
-      @aylien_news_api.list_stories(options)
     end
+    @aylien_news_api.list_stories(options)
   end
 
   def self.get_text_bias article_body
@@ -95,15 +94,15 @@ end
 #  16003002 => civil unrest (rebellion)
 
 # See https://iptc.org/standards/subject-codes/
-Options = Struct.new(
-  :language,
-  :published_at_start,
-  :published_at_end,
-  :categories_taxonomy,
-  :categories_confident,
-  :categories_id,
-  :source_rankings_alexa_rank_min,
-  :source_rankings_alexa_rank_max,
-  :media_images_count_min,
-  :per_page
-)
+# Options = Struct.new(
+#   :language,
+#   :published_at_start,
+#   :published_at_end,
+#   :categories_taxonomy,
+#   :categories_confident,
+#   :categories_id,
+#   :source_rankings_alexa_rank_min,
+#   :source_rankings_alexa_rank_max,
+#   :media_images_count_min,
+#   :per_page
+# )
