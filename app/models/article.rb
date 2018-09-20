@@ -1,9 +1,9 @@
 class Article < ApplicationRecord
   has_many :votes
   has_many :users, through: :votes
-  after_create :retrieve_bias
-
   has_one :bias, as: :biasable
+
+  after_create :retrieve_bias
 
   attr_accessor :bias_structure
 
