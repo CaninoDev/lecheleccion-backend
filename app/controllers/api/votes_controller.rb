@@ -11,7 +11,7 @@ class API::VotesController < ApplicationController
     user = User.find_by_id(vote_params[:user_id])
     article = Article.find_by_id(vote_params[:article_id])
     vote = vote_params[:voted]
-    @vote = Vote.where(article_id: article.id, user_id: user.id, vote: vote).first_or_create
+    @vote = Vote.create(article_id: article.id, user_id: user.id, vote: vote)
     render json: {status: :ok}
   end
 

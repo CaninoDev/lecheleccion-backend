@@ -14,11 +14,11 @@ class User < ApplicationRecord
     biases = self.votes.map {|v| v.bias.slice(parties)}
     biases.map!(&:deep_symbolize_keys)
     parties.each{|party| ave_bias[party] = biases.each.inject(0){|sum, obj| sum + obj[party]}}
-    theBias = ave_bias.transform_values{ |v| v/self.votes.count }
+    the_bias = ave_bias.transform_values{ |v| v/self.votes.count }
     if self.bias == nil
-      self.bias = Bias.create(theBias)
+      self.bias = Bias.create(the_bias)
     else
-      self.bias.update(theBias)
+      self.bias.update(the_bias)
     end
   end
 end

@@ -5,11 +5,11 @@ require 'pp'
 class API::ArticlesController < ApplicationController
 
   def index
-    news_collection = Vendor.get_news_articles
-    processed_collection = preprocess(news_collection)
-    json_response(processed_collection)
-    # @articles = Article.all
-    # json_response(@articles)
+    # news_collection = Vendor.get_news_articles
+    # processed_collection = preprocess(news_collection)
+    # json_response(processed_collection)
+    @articles = Article.all
+    json_response(@articles)
   end
 
   def search
@@ -27,10 +27,10 @@ class API::ArticlesController < ApplicationController
 
   def preprocess articles
     prefiltered_articles = prefilter(articles)
-    createArticleRecords(prefiltered_articles)
+    create_article_records(prefiltered_articles)
   end
 
-  def createArticleRecords articles
+  def create_article_records articles
     articles.map do |article|
       Article.create(
         title: article.title,

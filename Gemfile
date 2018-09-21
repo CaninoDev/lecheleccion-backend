@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.5.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails'
+gem 'rails', github: 'rails/rails'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
 # Use Puma as the app server
@@ -30,12 +30,10 @@ gem 'news-api'
 
 # Access the aylien text analysis API
 gem 'aylien_news_api', :git => 'https://github.com/AYLIEN/aylien_newsapi_ruby.git'
-gem 'aylien_text_api'
+# gem 'aylien_text_api'
 
 # Indico API Gem
 gem 'indico'
-# linting tool
-gem 'solargraph'
 
 # CORS access
 gem 'rack-cors', require: 'rack/cors'
@@ -52,21 +50,23 @@ gem 'edge_rider'
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'
 
-group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-end
+# group :development, :test do
+#   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+#   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+# end
 
 group :development do
   gem 'listen', '>= 3.0.5', '< 3.2'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  # linting tool
+  gem 'solargraph'
 end
 
-
-# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+#
+# # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+# gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # Please clean up duplicated gems if any.
 # Feel free to remove gems that you don't want to use or if they conflict with other gem dependencies. (you might need to update .pryrc also)
