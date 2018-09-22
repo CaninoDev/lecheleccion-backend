@@ -19,18 +19,17 @@ class API::ArticlesController < ApplicationController
   end
 
   def bias
-    @articles_average = Article.averages
-    json_response(@articles_average)
+    json_response(Article.averages)
   end
 
   private
 
   def preprocess articles
     prefiltered_articles = prefilter(articles)
-    createArticleRecords(prefiltered_articles)
+    create_article_records(prefiltered_articles)
   end
 
-  def createArticleRecords articles
+  def create_article_records articles
     articles.map do |article|
       Article.create(
         title: article.title,

@@ -23,19 +23,17 @@ gem 'puma'
 # gem 'capistrano-rails', group: :development
 
 # Reduces boot times through caching; required in config/boot.rb
-# gem 'bootsnap', '>= 1.1.0', require: false
+gem 'bootsnap', '>= 1.1.0'
 
 # Access Google News API
 gem 'news-api'
 
 # Access the aylien text analysis API
-gem 'aylien_news_api', :git => 'https://github.com/AYLIEN/aylien_newsapi_ruby.git'
-gem 'aylien_text_api'
+gem 'aylien_news_api', :git => 'https://github.com/CaninoDev/aylien_newsapi_ruby.git'
+# gem 'aylien_text_api'
 
 # Indico API Gem
 gem 'indico'
-# linting tool
-gem 'solargraph'
 
 # CORS access
 gem 'rack-cors', require: 'rack/cors'
@@ -51,22 +49,25 @@ gem 'edge_rider'
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'
+gem 'json', '>= 2.1.0'
 
-group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-end
+# group :development, :test do
+#   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+#   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+# end
 
 group :development do
   gem 'listen', '>= 3.0.5', '< 3.2'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  # linting tool
+  gem 'solargraph'
 end
 
-
-# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+#
+# # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+# gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # Please clean up duplicated gems if any.
 # Feel free to remove gems that you don't want to use or if they conflict with other gem dependencies. (you might need to update .pryrc also)
@@ -76,3 +77,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 #   gem 'pry-byebug'
 #   gem 'pry-stack_explorer'
 # end
+
+gem "rubocop", "~> 0.59.1"

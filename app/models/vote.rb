@@ -1,29 +1,35 @@
+# frozen_string_literal: true
+
 class Vote < ApplicationRecord
+
+
   belongs_to :user
   belongs_to :article
 
   has_one :bias, as: :biasable
 
-  after_create :get_bias, :update_user_bias
+  after_create :retrieve_bias, :update_user_bias
 
   private
 
-  def get_bias
+  def retrieve_bias
     parties = %i[libertarian green liberal conservative]
-    artBias = self.article.bias.slice(parties).deep_symbolize_keys
+    article_bias = article.bias.slice(parties).deep_symbolize_keys
     vote = self.vote
-    case (vote)
-    when -1
-      theBias = artBias.transform_values { |v| v/2 }
-    when 0
-      theBias = artBias
-    when 1
-      theBias = artBias.transform_values { |v| v/2 }
-    end
-    self.bias = Bias.create(theBias)
+    the_bias = case vote
+               when -1
+                 article_bias.transform_values { |v| v/2 }
+               when 0
+                 article_bias
+               when 1
+                 article_bias.transform_values { |v| v/2 }
+               else
+                 article_bias
+               end
+    self.bias = Bias.create(the_bias)
   end
 
   def update_user_bias
-    self.user.update_user_bias
+    user.update_user_bias
   end
 end
