@@ -3,13 +3,13 @@
 require 'pp'
 # API endpoints for the collection and distribution of select news articles
 class API::ArticlesController < ApplicationController
-
   def index
-    news_collection = Vendor.get_news_articles
-    processed_collection = preprocess(news_collection)
-    json_response(processed_collection)
-    # @articles = Article.all
-    # json_response(@articles)
+    cursor = nil
+    2.times do
+      news_collection = Vendor.get_news_articles(cursor: cursor)
+      cursor = news_collection.next_page_cursor
+      preprocess(news_collection)
+    end
   end
 
   def search
@@ -19,32 +19,40 @@ class API::ArticlesController < ApplicationController
   end
 
   def bias
-    json_response(Article.averages)
+    articles_average = Article.averages
+    render json: articles_average
   end
 
   private
 
-  def preprocess articles
+  def preprocess(articles)
     prefiltered_articles = prefilter(articles)
-    create_article_records(prefiltered_articles)
-  end
-
-  def create_article_records articles
-    articles.map do |article|
-      Article.create(
-        title: article.title,
-        source: article.source.name,
-        body: article.body,
-        url: article.links.permalink,
-        urlToImage: article.media[0].url,
-        publication_date: article.published_at,
-        external_reference_id: article.id
-      )
+    prefiltered_articles.each do |article|
+      create_article_record(article)
     end
   end
 
-  def prefilter articles
-    articles.stories.reject { |article| article.body.length < 400 || article.title.length < 1}
+  def create_article_record(article)
+    article_record = Article.new(
+      :title => article.title,
+      :source => article.source.name,
+      :body => article.body,
+      :url => article.links.permalink,
+      :urlToImage => article.media[0].url,
+      :publication_date => article.published_at,
+      :external_reference_id => article.id
+    )
+    if article_record.save
+      serialized_data = ActiveModelSerializers::Adapter::Json.new(
+        ArticleSerializer.new(article_record)
+      ).serializable_hash
+      ActionCable.server.broadcast 'articles_channel', serialized_data
+      head :ok
+    end
+  end
+
+  def prefilter(articles)
+    articles.stories.reject { |article| article.body.length < 400 || article.title.empty? }
   end
 
   def article_params
