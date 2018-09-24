@@ -20,7 +20,7 @@ class API::ArticlesController < ApplicationController
 
   def bias
     articles_average = Article.averages
-    render json: articles_average
+    render json: articles_average.to_json
   end
 
   private
