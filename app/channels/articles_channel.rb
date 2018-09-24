@@ -9,7 +9,8 @@ class ArticlesChannel < ApplicationCable::Channel
       ActionCable
           .server
           .broadcast('articles_channel',
-                     articles.as_json(only: %i[id url urlToImage publication_date title body source]))
+                     article
+          )
       end
   end
 
