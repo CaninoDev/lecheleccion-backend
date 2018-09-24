@@ -1,5 +1,3 @@
-require 'Indico'
-
 module Vendor
   attr_accessor :google_news_api, :aylien_news_api, :aylien_text_api, :subject_codes
 
