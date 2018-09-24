@@ -52,10 +52,6 @@ module Vendor
     options[:per_page] = number
     @aylien_news_api.list_stories(options)
   end
-
-  def self.get_text_bias (article_body)
-    Indico.political(article_body)
-  end
 end
 
 
