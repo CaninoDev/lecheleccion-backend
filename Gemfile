@@ -12,7 +12,7 @@ gem 'puma'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
-# gem 'redis', '~> 4.0'
+gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -36,7 +36,7 @@ gem 'aylien_news_api', :git => 'https://github.com/CaninoDev/aylien_newsapi_ruby
 gem 'indico'
 
 # CORS access
-gem 'rack-cors', require: 'rack/cors'
+gem 'rack-cors'
 
 # Better console than rails console
 gem 'awesome_rails_console'
@@ -71,11 +71,9 @@ end
 
 # Please clean up duplicated gems if any.
 # Feel free to remove gems that you don't want to use or if they conflict with other gem dependencies. (you might need to update .pryrc also)
-# group :development, :test do
-#   gem 'hirb'
-#   gem 'hirb-unicode'
-#   gem 'pry-byebug'
-#   gem 'pry-stack_explorer'
-# end
 
 gem "rubocop", "~> 0.59.1"
+
+gem "active_model_serializers", "~> 0.10.7"
+
+gem "actioncable", "~> 5.2"

@@ -33,15 +33,19 @@ module Vendor
     source_rankings_alexa_rank_min: 3,
     source_rankings_alexa_rank_max: 500,
     media_images_count_min: 1,
-    per_page: 50
+    per_page: 10
     }
     options
   end
 
-  def self.get_news_articles (query=nil, number=50)
+  def self.get_news_articles (query: nil, number: 10, cursor: nil)
     options = self.aylien_news_options
     if query != nil
       options[:text] = query
+    end
+
+    if cursor != nil
+      options[:cursor] = cursor
     end
     options[:per_page] = number
     @aylien_news_api.list_stories(options)
