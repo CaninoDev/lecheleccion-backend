@@ -1,17 +1,18 @@
 class Article < ApplicationRecord
-  extend ActiveModel::Callbacks
-
-  define_model_callbacks :create, only: :after
 
   has_many :votes
   has_many :users, through: :votes
 
   has_one :bias, as: :biasable
 
-  attr_accessor :bias_structure
+  attr_accessor :bias_structure, :articles_bias
+
+  after_create :retrieve_bias
+
+  @articles_bias = Struct.new(:libertarian, :green, :liberal, :conservative)
 
   def self.averages
-    Struct::ArticlesBias.new(
+    @articles_bias.new(
       Article.traverse_association(:bias).average('libertarian'),
       Article.traverse_association(:bias).average('green'),
       Article.traverse_association(:bias).average('liberal'),

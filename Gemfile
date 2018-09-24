@@ -12,7 +12,7 @@ gem 'puma'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
-# gem 'redis', '~> 4.0'
+gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -23,20 +23,20 @@ gem 'puma'
 # gem 'capistrano-rails', group: :development
 
 # Reduces boot times through caching; required in config/boot.rb
-# gem 'bootsnap', '>= 1.1.0', require: false
+gem 'bootsnap', '>= 1.1.0'
 
 # Access Google News API
 gem 'news-api'
 
 # Access the aylien text analysis API
-gem 'aylien_news_api', :git => 'https://github.com/AYLIEN/aylien_newsapi_ruby.git'
+gem 'aylien_news_api', :git => 'https://github.com/CaninoDev/aylien_newsapi_ruby.git'
 # gem 'aylien_text_api'
 
 # Indico API Gem
 gem 'indico'
 
 # CORS access
-gem 'rack-cors', require: 'rack/cors'
+gem 'rack-cors'
 
 # Better console than rails console
 gem 'awesome_rails_console'
@@ -49,6 +49,7 @@ gem 'edge_rider'
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'
+gem 'json', '>= 2.1.0'
 
 # group :development, :test do
 #   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -70,9 +71,9 @@ end
 
 # Please clean up duplicated gems if any.
 # Feel free to remove gems that you don't want to use or if they conflict with other gem dependencies. (you might need to update .pryrc also)
-# group :development, :test do
-#   gem 'hirb'
-#   gem 'hirb-unicode'
-#   gem 'pry-byebug'
-#   gem 'pry-stack_explorer'
-# end
+
+gem "rubocop", "~> 0.59.1"
+
+gem "active_model_serializers", "~> 0.10.7"
+
+gem "actioncable", "~> 5.2"

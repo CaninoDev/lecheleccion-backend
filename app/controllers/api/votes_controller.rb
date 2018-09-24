@@ -8,10 +8,7 @@ class API::VotesController < ApplicationController
   end
 
   def create
-    user = User.find_by_id(vote_params[:user_id])
-    article = Article.find_by_id(vote_params[:article_id])
-    vote = vote_params[:voted]
-    @vote = Vote.create(article_id: article.id, user_id: user.id, vote: vote)
+    @vote = Vote.create(article_id: vote_params[:article_id], user_id: vote_params[:user_id], vote: vote_params[:voted])
     render json: {status: :ok}
   end
 

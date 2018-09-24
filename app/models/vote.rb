@@ -1,22 +1,16 @@
 # frozen_string_literal: true
 
 class Vote < ApplicationRecord
-  extend ActiveModel::Callbacks
-  define_model_callbacks :create, only: :after
+
 
   belongs_to :user
   belongs_to :article
 
   has_one :bias, as: :biasable
 
-  private
+  after_create :retrieve_bias, :update_user_bias
 
-  def create
-    run_callbacks :create do
-      retrieve_bias
-      update_user_bias
-    end
-  end
+  private
 
   def retrieve_bias
     parties = %i[libertarian green liberal conservative]
