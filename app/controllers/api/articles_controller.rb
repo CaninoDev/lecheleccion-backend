@@ -13,9 +13,9 @@ class API::ArticlesController < ApplicationController
   end
 
   def search
-    news_collection = Vendor.get_news_articles params[:search_term]
-    processed = preprocess(news_collection)
-    json_response(processed)
+    # news_collection = Vendor.get_news_articles params[:search_term]
+    # processed = preprocess(news_collection)
+    # json_response(processed)
   end
 
   def bias
