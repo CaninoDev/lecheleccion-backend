@@ -2,6 +2,7 @@
 
 # Processor module culled originally from ArticlesController
 module ArticleProcessor
+  include Vendor
   def self.fetch_an_render_news_articles
     news_collection = Vendor.get_news_articles(number: 50)
     process_and_render(news_collection)

@@ -3,7 +3,9 @@
 class ArticlesChannel < ApplicationCable::Channel
   def recent (_data = nil)
 
-    if 1 === 1
+    if (Article.count < 1 || Article.last.created_at > Time.zone.now.ago(2.hours))
+      ArticleProcessor.fetch_an_render_news_articles
+    else
       articles = Article.last(10)
       articles.each do |article|
         ActionCable
@@ -11,8 +13,6 @@ class ArticlesChannel < ApplicationCable::Channel
             .broadcast('articles_channel',
                        article)
       end
-    else
-      ArticleProcessor.fetch_an_render_news_articles
     end
   end
 
