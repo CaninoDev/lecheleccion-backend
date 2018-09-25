@@ -4,7 +4,7 @@
 class ArticlesChannel < ApplicationCable::Channel
   def recent (_data = nil)
 
-    if (Article.count < 1 || Article.last.created_at > Time.zone.now.ago(2.hours))
+    if (Article.count < 1 || Article.last.created_at < Time.zone.now.ago(2.hours))
       ArticleProcessor.fetch_and_render_news_articles
     else
       articles = Article.last(10)
