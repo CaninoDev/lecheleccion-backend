@@ -3,15 +3,22 @@
 require 'pp'
 # API endpoints for the collection and distribution of select news articles
 class API::ArticlesController < ApplicationController
-  def index
-  end
+  def index; end
 
-  def search
-  end
+  def search; end
 
   def bias
-    articles_average = Article.averages
-    render json: articles_average.to_json
+    if Article.count < 1
+      articles_average = {
+        :libertarian => 1,
+        :green => 1,
+        :liberal => 1,
+        :conservative => 1
+      }
+    else
+      articles_average = Article.averages
+    end
+    render json: articles_average.to_h
   end
 
   private
