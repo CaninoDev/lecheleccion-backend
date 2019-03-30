@@ -36,3 +36,6 @@ lib/tasks/\.keep
 \.vscode/
 
 app/models/mockdata\.json
+
+.idea/
+.DS_STORE
